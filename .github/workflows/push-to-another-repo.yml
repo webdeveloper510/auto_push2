@@ -1,0 +1,33 @@
+name: Push Changes to Another Repo
+
+on:
+  push:
+    branches:
+      - main  # Trigger this workflow on push to the 'main' branch
+
+jobs:
+  push-to-another-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+      with:
+        # Fetch all branches, tags, and the history of the repository
+        fetch-depth: 0
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "webdeveloper510"
+        git config --global user.email "developerweb6@gmail.com"
+
+    - name: Add remote repository
+      run: |
+        git remote add target https://github.com/webdeveloper510/auto_push2.git
+        git fetch target
+
+    - name: Push to the target repository
+      run: |
+        git push target main
+      env:
+        GITHUB_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
