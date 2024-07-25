@@ -26,8 +26,17 @@ jobs:
         git remote add target https://github.com/webdeveloper510/auto_push2.git
         git fetch target
 
+    - name: Debug - Show remotes
+      run: git remote -v
+
+    - name: Debug - Show branches
+      run: git branch -a
+
     - name: Push to the target repository
       run: |
         git push target main
       env:
         GITHUB_TOKEN: ${{ secrets.TARGET_REPO_TOKEN }}
+
+    - name: Debug - Show commit history
+      run: git log -5
